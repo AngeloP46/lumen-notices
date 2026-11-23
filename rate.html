@@ -139,9 +139,14 @@ send.onclick=function(){
   data._subject='Lumen RAW feedback: '+data.stars_out_of_5+' stars'+(onList?' [DISCOUNT]':'');
   data._template='table';
   send.disabled=true; send.textContent='Sending...';
-  fetch('https://formsubmit.co/ajax/theracinglineltd@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
-   .then(function(r){return r.json()}).then(function(j){if(j&&(j.success===true||j.success==='true')){show(6)}else{throw 0}})
-   .catch(function(){send.disabled=false;label();var e=document.getElementById('err');e.textContent='That did not send. Please check your connection and try again.';e.style.display='block'});
+  // sent in the background with an ordinary form post into a hidden frame: the page never waits for the service
+  data._captcha='false';
+  var fr=document.createElement('iframe');fr.name='sendframe';fr.style.display='none';document.body.appendChild(fr);
+  var f=document.createElement('form');f.method='POST';f.action='https://formsubmit.co/theracinglineltd@gmail.com';f.target='sendframe';f.style.display='none';
+  Object.keys(data).forEach(function(k){var i=document.createElement('input');i.type='hidden';i.name=k;i.value=String(data[k]);f.appendChild(i)});
+  document.body.appendChild(f);
+  try{f.submit()}catch(x){send.disabled=false;label();var e=document.getElementById('err');e.textContent='That did not send. Please check your connection and try again.';e.style.display='block';return}
+  setTimeout(function(){show(6)},1200);
 };
 var h=parseInt((location.hash||'').replace('#step=',''),10);
 if(h===2){setSecond(true)}
