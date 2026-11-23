@@ -1,73 +1,127 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Lumen RAW: how is it going?</title>
+<title>Lumen RAW: quick question</title>
 <style>
 :root{color-scheme:dark}
-body{margin:0;background:#101012;color:#f2f2f4;font:17px/1.45 -apple-system,system-ui,sans-serif}
-main{max-width:560px;margin:0 auto;padding:28px 20px 60px}
-h1{font-size:26px;margin:0 0 6px}
-p.lead{color:#b8b8c0;margin:0 0 24px}
-label.q{display:block;font-weight:600;margin:22px 0 8px}
-.stars{display:flex;gap:6px}
-.stars button{flex:1;font-size:30px;padding:10px 0;border-radius:12px;border:1px solid #2c2c32;background:#1a1a1e;color:#555;cursor:pointer}
+*{box-sizing:border-box}
+body{margin:0;background:#101012;color:#f2f2f4;font:18px/1.45 -apple-system,system-ui,sans-serif;min-height:100vh}
+main{max-width:520px;margin:0 auto;padding:22px 20px 40px;min-height:100vh;display:flex;flex-direction:column}
+.dots{display:flex;gap:6px;margin:4px 0 30px}
+.dots i{flex:1;height:4px;border-radius:2px;background:#26262c}
+.dots i.on{background:#3f9bff}
+.step{display:none;animation:in .28s ease both}
+.step.show{display:block}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{font-size:28px;line-height:1.2;margin:0 0 8px}
+p.sub{color:#a9a9b3;margin:0 0 24px}
+.stars{display:flex;gap:8px;margin-top:10px}
+.stars button{flex:1;font-size:38px;padding:16px 0;border-radius:16px;border:1px solid #2c2c32;background:#1a1a1e;color:#4a4a52;cursor:pointer}
 .stars button.on{color:#f6c453;border-color:#f6c453}
-textarea,input[type=email]{width:100%;box-sizing:border-box;border-radius:12px;border:1px solid #2c2c32;background:#1a1a1e;color:#f2f2f4;font:inherit;padding:12px}
-textarea{min-height:92px}
-.row{display:flex;flex-wrap:wrap;gap:8px}
-.row label{display:inline-flex;align-items:center;gap:6px;margin:0;font-weight:400;padding:9px 13px;border:1px solid #2c2c32;border-radius:20px;background:#1a1a1e}
-.send{width:100%;margin-top:28px;padding:15px;border:0;border-radius:14px;background:#3f9bff;color:#fff;font:600 18px -apple-system,system-ui,sans-serif;cursor:pointer}
-.send:disabled{opacity:.4}
+.chips{display:flex;flex-direction:column;gap:10px}
+.chips button{text-align:left;padding:16px 18px;border-radius:16px;border:1px solid #2c2c32;background:#1a1a1e;color:#f2f2f4;font:inherit;cursor:pointer}
+.chips button:active{border-color:#3f9bff}
+textarea,input[type=email]{width:100%;border-radius:16px;border:1px solid #2c2c32;background:#1a1a1e;color:#f2f2f4;font:inherit;padding:14px}
+textarea{min-height:130px}
+.next{width:100%;margin-top:18px;padding:16px;border:0;border-radius:16px;background:#3f9bff;color:#fff;font:600 19px -apple-system,system-ui,sans-serif;cursor:pointer}
+.next:disabled{opacity:.35}
+.skip{display:block;width:100%;margin-top:6px;padding:12px;border:0;background:none;color:#8d8d96;font:inherit;cursor:pointer}
 .note{color:#8d8d96;font-size:14px;margin-top:14px}
 .hp{position:absolute;left:-9999px}
+.err{color:#ff8a80;margin-top:12px;display:none}
+.big{font-size:56px;margin:30px 0 10px}
 </style></head><body><main>
-<h1>How is Lumen RAW going?</h1>
-<p class="lead">One minute. I read every answer and reply to each one.</p>
+<div class="dots" id="dots"></div>
 
-<form action="https://formsubmit.co/theracinglineltd@gmail.com" method="POST" id="f">
-<input type="hidden" name="_subject" value="Lumen RAW feedback">
-<input type="hidden" name="_template" value="table">
-<input type="hidden" name="_next" value="https://angelop46.github.io/lumen-notices/thanks.html">
-<input type="text" name="_honey" class="hp" tabindex="-1" autocomplete="off">
-<input type="hidden" name="stars_out_of_5" id="score" value="">
-
-<label class="q">How much do you like Lumen RAW? (1 star to 5 stars)</label>
+<section class="step" id="s1">
+<h1>How much do you like Lumen RAW?</h1>
+<p class="sub">Tap a star. It takes about a minute.</p>
 <div class="stars" id="stars"></div>
+</section>
 
-<label class="q" for="shoot">What do you shoot, and with what camera or phone?</label>
-<textarea id="shoot" name="what_I_shoot"></textarea>
+<section class="step" id="s2">
+<h1 id="q2">&nbsp;</h1>
+<p class="sub">Tap the closest one.</p>
+<div class="chips" id="c2"></div>
+</section>
 
-<label class="q">Are you still using it?</label>
-<div class="row">
-<label><input type="radio" name="still_using" value="Yes, as much as before"> Yes, as much as before</label>
-<label><input type="radio" name="still_using" value="I use it less now"> I use it less now</label>
-<label><input type="radio" name="still_using" value="I stopped"> I stopped</label>
-</div>
+<section class="step" id="s3">
+<h1>If you could change one thing, what would it be?</h1>
+<p class="sub">A few words is plenty. This is the bit I read first.</p>
+<textarea id="fix" placeholder="e.g. a faster export, a tool I miss, something confusing"></textarea>
+<button class="next" id="n3">Next</button>
+<button class="skip" id="k3">Skip this one</button>
+</section>
 
-<label class="q" for="why">If you use it less or stopped, what made you?</label>
-<textarea id="why" name="why_less_or_stopped"></textarea>
+<section class="step" id="s4">
+<h1>Would you pay for Lumen RAW Pro?</h1>
+<p class="sub">Honest answers help me most, including "no".</p>
+<div class="chips" id="c4"></div>
+</section>
 
-<label class="q" for="fix">The one thing I should fix or add first?</label>
-<textarea id="fix" name="fix_or_add_first"></textarea>
+<section class="step" id="s5">
+<h1>Last one: where can I reach you?</h1>
+<p class="sub">So I can say thank you and reply to what you told me. I only use it to reply to you and never share it.</p>
+<input type="email" id="em" placeholder="you@example.com" autocomplete="email" inputmode="email">
+<div class="err" id="err">Please enter a valid email address.</div>
+<button class="next" id="send" disabled>Send</button>
+<p class="note">Your answers go to me, Angelo, who built Lumen RAW, through a form service (FormSubmit) that passes them to my inbox.</p>
+<input type="text" id="hp" class="hp" tabindex="-1" autocomplete="off">
+</section>
 
-<label class="q">Would you pay for Lumen RAW Pro?</label>
-<div class="row">
-<label><input type="radio" name="would_pay" value="Yes, monthly"> Yes, monthly</label>
-<label><input type="radio" name="would_pay" value="Yes, yearly"> Yes, yearly</label>
-<label><input type="radio" name="would_pay" value="Yes, one-off Lifetime"> Yes, one-off</label>
-<label><input type="radio" name="would_pay" value="Not sure"> Not sure</label>
-<label><input type="radio" name="would_pay" value="No"> No</label>
-</div>
-
-<label class="q" for="em">Your email (optional, so I can reply to you)</label>
-<input type="email" id="em" name="email" autocomplete="email" placeholder="you@example.com">
-
-<button class="send" id="send" type="submit" disabled>Send my answers</button>
-<p class="note">Your answers are sent to me, Angelo, who built Lumen RAW, through a form service (FormSubmit) that passes them to my inbox. Your email address is only used to reply to you and is never shared. If you leave it blank I get your answers without it.</p>
-</form>
+<section class="step" id="s6">
+<div class="big">&#128591;</div>
+<h1>Thank you.</h1>
+<p class="sub">I read every answer and I will reply. You can close this page and go back to Lumen RAW.</p>
+</section>
 
 <script>
-var box=document.getElementById('stars');
+var cur=0, data={}, TOTAL=5;
+var dots=document.getElementById('dots');
+for(var i=0;i<TOTAL;i++){dots.appendChild(document.createElement('i'))}
+function show(n){
+  cur=n;
+  [].forEach.call(document.querySelectorAll('.step'),function(s){s.classList.remove('show')});
+  document.getElementById('s'+n).classList.add('show');
+  [].forEach.call(dots.children,function(d,j){d.className=j<Math.min(n,TOTAL)?'on':''});
+  dots.style.visibility=n>TOTAL?'hidden':'visible';
+  window.scrollTo(0,0);
+}
+function fillChips(box,list,key,after){
+  box.innerHTML='';
+  list.forEach(function(t){var b=document.createElement('button');b.type='button';b.textContent=t;
+    b.onclick=function(){data[key]=t;after()};box.appendChild(b)});
+}
+var GOOD=['How it edits RAW photos','Masks and AI tools','LUTs and presets','It is simple to use','The price'];
+var BAD=['Something I need is missing','Bugs or crashes','It feels slow','Hard to figure out','I prefer another app','I do not edit much'];
+function setSecond(good){
+  document.getElementById('q2').textContent=good?'Glad to hear it. What do you like most?':'Thanks for being honest. What is holding it back?';
+  fillChips(document.getElementById('c2'),good?GOOD:BAD,good?'likes_most':'holding_back',function(){show(3)});
+}
+var sbox=document.getElementById('stars');
 for(let i=1;i<=5;i++){var b=document.createElement('button');b.type='button';b.textContent='★';b.setAttribute('aria-label',i+' of 5');
- b.onclick=function(){document.getElementById('score').value=i;[].forEach.call(box.children,function(c,j){c.className=j<i?'on':''});document.getElementById('send').disabled=false};box.appendChild(b)}
+  b.onclick=function(){
+    data.stars_out_of_5=i;
+    [].forEach.call(sbox.children,function(c,j){c.className=j<i?'on':''});
+    setSecond(i>=4);
+    setTimeout(function(){show(2)},260);
+  };sbox.appendChild(b)}
+document.getElementById('n3').onclick=function(){data.change_first=document.getElementById('fix').value.trim();show(4)};
+document.getElementById('k3').onclick=function(){data.change_first='(skipped)';show(4)};
+fillChips(document.getElementById('c4'),['Yes, monthly','Yes, yearly','Yes, one-off Lifetime','Not sure','No'],'would_pay',function(){show(5)});
+var em=document.getElementById('em'),send=document.getElementById('send');
+function ok(){return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em.value.trim())}
+em.oninput=function(){send.disabled=!ok();document.getElementById('err').style.display='none'};
+send.onclick=function(){
+  if(!ok()){document.getElementById('err').style.display='block';return}
+  if(document.getElementById('hp').value){return}
+  data.email=em.value.trim(); data._subject='Lumen RAW feedback: '+data.stars_out_of_5+' stars'; data._template='table';
+  send.disabled=true; send.textContent='Sending...';
+  fetch('https://formsubmit.co/ajax/theracinglineltd@gmail.com',{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)})
+   .then(function(r){return r.json()}).then(function(j){if(j&&(j.success===true||j.success==='true')){show(6)}else{throw 0}})
+   .catch(function(){send.disabled=false;send.textContent='Send';var e=document.getElementById('err');e.textContent='That did not send. Please check your connection and try again.';e.style.display='block'});
+};
+var h=parseInt((location.hash||'').replace('#step=',''),10);
+if(h===2){setSecond(true)}
+show(h>=1&&h<=6?h:1);
 </script></main></body></html>
